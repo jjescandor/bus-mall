@@ -13,7 +13,7 @@ let clickCount = 25;
 
 function Products(name, filename = 'jpg') {
     this.name = name;
-    this.src = `../img/${name}.${filename}`;
+    this.src = `img/${name}.${filename}`;
     this.views = 0;
     this.votes = 0;
     productsArray.push(this);
