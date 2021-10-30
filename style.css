@@ -8,7 +8,7 @@ body{
 }
 
 h1{
-    padding: 2rem;
+    padding: rem;
     color: #2F4F4F;
 }
 
@@ -19,7 +19,6 @@ header{
     justify-content: center;
     width: 100%;
     background-color:#778899;
-    margin:none;
 }
 
 main{

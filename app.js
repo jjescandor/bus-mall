@@ -25,6 +25,7 @@ new Products('bathroom');
 new Products('boots');
 new Products('breakfast');
 new Products('bubblegum');
+new Products('chair');
 new Products('cthulhu');
 new Products('dog-duck');
 new Products('dragon');
@@ -39,7 +40,7 @@ new Products('water-can');
 new Products('wine-glass');
 
 function getRandomNum() {
-    return Math.floor(Math.random() * 18);
+    return Math.floor(Math.random() * 19);
 }
 
 function renderProducts() {
@@ -100,7 +101,6 @@ function handleResults(event) {
     }
 
 }
-
 
 productButton.addEventListener('click', handleClick);
 resultsButton.addEventListener('click', handleResults);
