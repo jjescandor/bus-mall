@@ -4,24 +4,52 @@ body{
     align-items:center;
     flex-direction: column;
     justify-content: center;
-    background-color:whitesmoke;
+    background-color:white;
     font-family:Arial, Helvetica, serif;
 }
 
+.logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#mall-logo{
+    margin-left: 2rem;
+    font-size: 4rem;
+    color:#475561;
+}
+
 h1{
-    color: #2F4F4F;
+    color: whitesmoke;
+    padding:1rem 1rem 0 1rem;
+    margin:5px 5px 0 5px;
+    font-family: cursive;
+    font-size: 2.5rem;
+}
+
+div p{
+    margin:0 0 1rem 1rem;;
+    font-size: 1.2rem;
+    color: whitesmoke;
 }
 
 header{
     display: flex;
     align-content: center;
     align-items:center;
-    justify-content: center;
+    justify-content: space-between;
     width: 70%;
-    margin: -10px 30rem 0rem 30rem;
-    background-color:#778899;
-    border-bottom: 5px solid rgb(211, 94, 94);
+    margin: -8px 30rem 0rem 30rem;
+    background-color:#95adc4;
+    border-top: 1rem solid #617281;
     opacity: 0.9;
+}
+
+.social{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
 }
 
 .result-div{
@@ -54,7 +82,7 @@ main section{
 img{
     width:300px;
     height:380px;
-    border: 0.5px solid transparent;
+    border: 0.5px solid #95adc4;
     border-radius: 3px;
     transition-duration: 350ms;
     -webkit-box-shadow: 0 10px 6px -6px #777;
@@ -65,7 +93,7 @@ img:hover{
     opacity:0.5;
     transform:scale(1.1);
     transition-duration: 1s;
-    border: 3px solid #90EE90;
+    border: 3px solid rgb(211, 94, 94);
 
 }
 
@@ -95,6 +123,7 @@ img:active{
     border-radius:5px;
     background-color:  rgb(211, 94, 94);
     cursor:pointer;
+    border: 1px solid #778899;;
 } 
 
 .skip:hover{
@@ -116,11 +145,12 @@ skip:active{
     -webkit-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
     pointer-events: auto;
+    border: 0.5px solid #778899;;
     border-radius: 5px;
     cursor: pointer;
 }
 
-view-result h2{
+.view-result h2{
     color:whitesmoke;
 }
 
@@ -143,7 +173,7 @@ body main .result:hover{
 h2{
     font-size: 1.5rem;
     font-weight: bold;
-    color: rgb(51, 51, 51);
+    color: #475561;;
 }
 
 ul{
@@ -176,4 +206,50 @@ ul{
 li{
     line-height: 2rem;
     font-size: 1.4rem;
+}
+
+.social li{
+    padding:1rem;
+    margin: 5px;
+    list-style-type: none;
+    padding:10px;
+    border-radius:5px;
+}
+
+.social li a{
+    color: white;
+}
+
+article{
+    width: 70%;
+    margin: 0rem 30rem;
+    height:5rem;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+article div{
+    width: 47%;
+    border-top: 1px solid #778899;
+}
+
+#small-logo{
+    font-size: 2rem;
+    color:#475561;
+}
+
+footer{
+    width:70%;
+    margin: 0rem 30rem;
+    display: flex;
+    align-content: center;
+    align-items:center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 1.2rem;
+}
+
+i:hover{
+    color:rgb(241, 128, 128);
 }
