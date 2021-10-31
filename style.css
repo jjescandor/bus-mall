@@ -4,7 +4,8 @@ body{
     align-items:center;
     flex-direction: column;
     justify-content: center;
-    background-color:#F0F8FF;
+    background-color:whitesmoke;
+    font-family:Arial, Helvetica, serif;
 }
 
 h1{
@@ -16,15 +17,17 @@ header{
     align-content: center;
     align-items:center;
     justify-content: center;
-    width: 90%;
-    margin: -10px 10rem 0rem 10rem;
+    width: 70%;
+    margin: -10px 30rem 0rem 30rem;
     background-color:#778899;
+    border-bottom: 5px solid rgb(211, 94, 94);
+    opacity: 0.9;
 }
 
 .result-div{
     display: flex;
     justify-content: center;
-    width:90%;
+    width:70%;
 }
 
 main{
@@ -32,8 +35,8 @@ main{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    width: 90%;
-    margin: 0rem 10rem;
+    width: 70%;
+    margin: 0rem 30rem;
     height:700px
 }
 
@@ -168,5 +171,9 @@ ul{
 
 .resultsUl{
     display: block;
-    line-height: 1rem;
+}
+
+li{
+    line-height: 2rem;
+    font-size: 1.4rem;
 }
