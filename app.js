@@ -1,6 +1,8 @@
 "use strict";
 
 let productsArray = [];
+let imagesArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu',
+    'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 let productImages = document.querySelectorAll('img');
 let productButton = document.querySelector('main section');
 let resultsUl = document.querySelector('.final-ul');
@@ -18,25 +20,14 @@ function Products(name, filename = 'jpg') {
     productsArray.push(this);
 }
 
-new Products('bag');
-new Products('banana');
-new Products('bathroom');
-new Products('boots');
-new Products('breakfast');
-new Products('bubblegum');
-new Products('chair');
-new Products('cthulhu');
-new Products('dog-duck');
-new Products('dragon');
-new Products('pen');
-new Products('pet-sweep');
-new Products('scissors');
-new Products('shark');
-new Products('sweep', 'png');
-new Products('tauntaun');
-new Products('unicorn');
-new Products('water-can');
-new Products('wine-glass');
+function instantiateObjects() {
+    new Products('sweep', 'png')
+    for (let images of imagesArray) {
+        new Products(images);
+    }
+}
+
+instantiateObjects();
 
 function getRandomNum() {
     return Math.floor(Math.random() * 19);
@@ -51,6 +42,7 @@ function renderProducts() {
         num3 = getRandomNum();
     }
     productImages[0].src = productsArray[num1].src;
+    console.log(productsArray[num1].src);
     productImages[1].src = productsArray[num2].src;
     productImages[2].src = productsArray[num3].src;
     productImages[0].alt = productsArray[num1].name;
@@ -59,8 +51,7 @@ function renderProducts() {
     productsArray[num1].views++;
     productsArray[num2].views++
     productsArray[num3].views++;
-    if (clickCount === 0) {
-        console.log('end');
+    if (!clickCount) {
         productButton.removeEventListener('click', handleClick);
         productImages[0].remove();
         productImages[1].remove();
@@ -71,7 +62,8 @@ function renderProducts() {
     }
 }
 
-renderProducts()
+renderProducts();
+
 
 function handleClick(event) {
     event.preventDefault();
@@ -79,16 +71,15 @@ function handleClick(event) {
         alert("Please select a product");
     } else {
         clickCount--;
-        console.log(clickCount);
         renderProducts();
         surveyBanner.textContent = `Remaining Votes: ${clickCount}`
-        if (clickCount === 0) {
+        if (!clickCount) {
             skipButton.className = 'end-of-survey';
             surveyBanner.textContent = 'End of survey, click the button below to view results'
         }
-        for (let i = 0; i < productsArray.length; i++) {
-            if (event.target.alt === productsArray[i].name) {
-                productsArray[i].votes++;
+        for (let product of productsArray) {
+            if (event.target.alt === product.name) {
+                product.votes++;
             }
         }
     }
@@ -99,9 +90,9 @@ function handleResults(event) {
     let resultsh2 = document.createElement('h2');
     resultsh2.textContent = "Survey Results";
     resultsUl.prepend(resultsh2);
-    for (let i = 0; i < productsArray.length; i++) {
+    for (let product of productsArray) {
         let resultsLi = document.createElement('li');
-        resultsLi.textContent = `${productsArray[i].name} had ${productsArray[i].votes} votes, and was seen ${productsArray[i].views} times.`
+        resultsLi.textContent = `${product.name} had ${product.votes} votes, and was seen ${product.views} times.`
         resultsUl.appendChild(resultsLi);
     }
     resultsButton.className = 'end-of-survey';
