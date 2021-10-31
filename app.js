@@ -5,10 +5,11 @@
 let productsArray = [];
 let productImages = document.querySelectorAll('img');
 let productButton = document.querySelector('main section');
-let resultsUl = document.querySelector('article ul');
-console.log(resultsUl);
-let resultsButton = document.querySelector('main div');
-console.log(resultsButton);
+let resultsUl = document.querySelector('ul');
+let surveyBanner = document.querySelector('body h2');
+
+let resultsButton = document.querySelector('.result');
+let skipButton = document.querySelector('.skip');
 let clickCount = 25;
 
 function Products(name, filename = 'jpg') {
@@ -66,8 +67,9 @@ function renderProducts() {
         productImages[0].remove();
         productImages[1].remove();
         productImages[2].remove();
-        productButton.innerHTML = '<h1>End of survey, click the button below to view results</h1>';
         resultsButton.className = 'view-result';
+        resultsUl.className = 'resultsUl';
+        productButton.className = 'end-of-survey-section';
     }
 }
 
@@ -81,6 +83,11 @@ function handleClick(event) {
         clickCount--;
         console.log(clickCount);
         renderProducts();
+        surveyBanner.textContent = `Remaining Votes: ${clickCount}`
+        if (clickCount === 0) {
+            skipButton.className = 'end-of-survey';
+            surveyBanner.textContent = 'End of survey, click the button below to view results'
+        }
         for (let i = 0; i < productsArray.length; i++) {
             if (event.target.alt === productsArray[i].name) {
                 productsArray[i].votes++;
@@ -96,13 +103,16 @@ function handleResults(event) {
     resultsUl.prepend(resultsh2);
     for (let i = 0; i < productsArray.length; i++) {
         let resultsLi = document.createElement('li');
-        resultsLi.textContent = `${productsArray[i].name} had ${productsArray[i].name} votes, and was seen ${productsArray[i].views} times.`
+        resultsLi.textContent = `${productsArray[i].name} had ${productsArray[i].votes} votes, and was seen ${productsArray[i].views} times.`
         resultsUl.appendChild(resultsLi);
     }
-
+    resultsButton.className = 'end-of-survey';
+    surveyBanner.className = 'end-of-survey';
 }
 
 productButton.addEventListener('click', handleClick);
 resultsButton.addEventListener('click', handleResults);
+skipButton.addEventListener('click', handleClick);
+
 
 
