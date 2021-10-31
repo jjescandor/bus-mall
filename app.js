@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 let productsArray = [];
 let productImages = document.querySelectorAll('img');
 let productButton = document.querySelector('main section');
