@@ -5,7 +5,7 @@
 let productsArray = [];
 let productImages = document.querySelectorAll('img');
 let productButton = document.querySelector('main section');
-let resultsUl = document.querySelector('ul');
+let resultsUl = document.querySelector('.final-ul');
 let surveyBanner = document.querySelector('body h2');
 
 let resultsButton = document.querySelector('.result');
