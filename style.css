@@ -87,6 +87,7 @@ img{
     transition-duration: 350ms;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
+    cursor: pointer;
 }
 
 img:hover{
@@ -129,6 +130,7 @@ img:active{
 .skip:hover{
     background-color: rgb(124, 56, 56);
     transform:scale(1.1);
+    transition-duration: 350ms;
 }
 
 skip:active{
