@@ -7,7 +7,6 @@ let productImages = document.querySelectorAll('img');
 let productButton = document.querySelector('main section');
 let resultsUl = document.querySelector('.final-ul');
 let surveyBanner = document.querySelector('body h2');
-
 let resultsButton = document.querySelector('.result');
 let skipButton = document.querySelector('.skip');
 let clickCount = 25;
@@ -42,7 +41,6 @@ function renderProducts() {
         num3 = getRandomNum();
     }
     productImages[0].src = productsArray[num1].src;
-    console.log(productsArray[num1].src);
     productImages[1].src = productsArray[num2].src;
     productImages[2].src = productsArray[num3].src;
     productImages[0].alt = productsArray[num1].name;
