@@ -4,7 +4,6 @@ body{
     align-items:center;
     flex-direction: column;
     justify-content: center;
-    background-color:white;
     font-family:Arial, Helvetica, serif;
 }
 
@@ -21,7 +20,7 @@ body{
 }
 
 h1{
-    color: whitesmoke;
+    color: #475561;
     padding:1rem 1rem 0 1rem;
     margin:5px 5px 0 5px;
     font-family: cursive;
@@ -31,7 +30,7 @@ h1{
 div p{
     margin:0 0 1rem 1rem;;
     font-size: 1.2rem;
-    color: whitesmoke;
+    color:  rgb(211, 94, 94);
 }
 
 header{
@@ -44,6 +43,10 @@ header{
     background-color:#95adc4;
     border-top: 1rem solid #617281;
     opacity: 0.9;
+    background: url('img/background.jpeg');
+    height:300px;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
 }
 
 .social{
@@ -65,7 +68,11 @@ main{
     align-items: center;
     width: 70%;
     margin: 0rem 30rem;
-    height:700px
+    height:700px;
+    background: url('img/brick-background.jpeg');
+    background-size: cover;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
 }
 
 main section{
@@ -73,7 +80,7 @@ main section{
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     align-content: center;
     height:100%;
@@ -85,8 +92,6 @@ img{
     border: 0.5px solid #95adc4;
     border-radius: 3px;
     transition-duration: 350ms;
-    -webkit-box-shadow: 0 10px 6px -6px #777;
-    box-shadow: 0 10px 6px -6px #777;
     cursor: pointer;
 }
 
@@ -95,7 +100,6 @@ img:hover{
     transform:scale(1.1);
     transition-duration: 1s;
     border: 3px solid rgb(211, 94, 94);
-
 }
 
 img:active{
@@ -119,8 +123,6 @@ img:active{
     width: 10rem;
     text-align:center;
     color:white;
-    -webkit-box-shadow: 0 10px 6px -6px #777;
-    box-shadow: 0 10px 6px -6px #777;
     border-radius:5px;
     background-color:  rgb(211, 94, 94);
     cursor:pointer;
@@ -250,8 +252,13 @@ footer{
     justify-content: center;
     flex-direction: column;
     font-size: 1.2rem;
+    background-color:white;
+}
+
+i{
+    color:  rgb(211, 94, 94)
 }
 
 i:hover{
-    color:rgb(241, 128, 128);
+    color:#475561;
 }
