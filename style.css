@@ -44,7 +44,7 @@ header{
     border-top: 1rem solid #617281;
     opacity: 0.9;
     background: url('img/background.jpeg');
-    height:300px;
+    height:250px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
 }
@@ -69,10 +69,7 @@ main{
     width: 70%;
     margin: 0rem 30rem;
     height:700px;
-    background: url('img/brick-background.jpeg');
     background-size: cover;
-    -webkit-box-shadow: 0 10px 6px -6px #777;
-    box-shadow: 0 10px 6px -6px #777;
 }
 
 main section{
@@ -93,6 +90,8 @@ img{
     border-radius: 3px;
     transition-duration: 350ms;
     cursor: pointer;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
 }
 
 img:hover{
@@ -126,7 +125,9 @@ img:active{
     border-radius:5px;
     background-color:  rgb(211, 94, 94);
     cursor:pointer;
-    border: 1px solid #778899;;
+    border: 1px solid #778899;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
 } 
 
 .skip:hover{
