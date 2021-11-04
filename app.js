@@ -4,7 +4,7 @@ let productsArray = [];
 let productsName = [];
 let randomNumArray = [];
 let oldNumArray = [];
-let likeViewsArray = [];
+let likabilityArray = [];
 let imagesArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu',
     'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 let productImages = document.querySelectorAll('img');
@@ -26,13 +26,12 @@ function Products(name, filename = 'jpg') {
 
 function instantiateObjects() {
     new Products('sweep', 'png')
-    for (let images of imagesArray) {
-        new Products(images);
+    for (let image of imagesArray) {
+        new Products(image);
     }
 }
 
 instantiateObjects();
-console.log(productsArray);
 
 function getRandomNum() {
     return Math.floor(Math.random() * productsArray.length);
@@ -72,7 +71,6 @@ function renderProducts() {
 
 renderProducts();
 
-
 function handleClick(event) {
     event.preventDefault();
     if (event.target === productButton) {
@@ -104,8 +102,6 @@ function handleClick(event) {
     }
 }
 
-
-
 function handleResults(event) {
     event.preventDefault();
     let resultsh2 = document.createElement('h2');
@@ -113,7 +109,7 @@ function handleResults(event) {
     resultsUl.prepend(resultsh2);
     for (let product of productsArray) {
         productsName.push(product.name);
-        likeViewsArray.push((product.votes / product.views) * 100)
+        likabilityArray.push((product.votes / product.views) * 100)
         let resultsLi = document.createElement('li');
         resultsLi.textContent = `${product.name} had ${product.votes} votes, and was seen ${product.views} times.`
         resultsUl.appendChild(resultsLi);
@@ -129,8 +125,8 @@ function displayChart() {
         data: {
             labels: productsName,
             datasets: [{
-                label: 'Likes per Views',
-                data: likeViewsArray,
+                label: '',
+                data: likabilityArray,
                 backgroundColor: [
                     'red',
                     'orange',
