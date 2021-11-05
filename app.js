@@ -32,7 +32,7 @@ function instantiateObjects() {
     }
 }
 
-Products.prototype.storeProductsLikes = function (likes) {
+Products.prototype.storeProducts = function (likes) {
     this.likesArray.push(likes);
     localStorage.setItem(this.name, JSON.stringify(this.likesArray));
 };
@@ -44,6 +44,8 @@ function getRandomNum() {
 }
 
 function renderProducts() {
+
+
     while (randomNumArray.length < 6) {
         let num = getRandomNum();
         if (!randomNumArray.includes(num)) {
@@ -96,6 +98,17 @@ function handleClick(event) {
         }
     }
 }
+console.log(productsArray);
+function countLikes() {
+    for (let i = 0; i < productsArray.length; i++) {
+        let numLikes = 0
+        for (let j = 0; j < productsArray[0].likesArray.length; j++) {
+            numLikes += productsArray[i].likesArray[j];
+        }
+        chartLikesArray.push(numLikes);
+    }
+    console.log(chartLikesArray);
+}
 
 function handleResults(event) {
     event.preventDefault();
@@ -104,18 +117,18 @@ function handleResults(event) {
     resultsUl.prepend(resultsh2);
     for (let product of productsArray) {
         productsName.push(product.name);
-        product.storeProductsLikes(product.votes);
-        let numLikes = 0
-        for (let j = 0; j < product.likesArray.length; j++) {
-            numLikes += product.likesArray[j];
-            chartLikesArray.push(numLikes);
-        }
+        product.storeProducts(product.votes);
+
     }
     myChartContainer.className = 'containerAfter';
+    countLikes();
     displayChart();
     resultsButton.className = 'end-of-survey';
     surveyBanner.className = 'end-of-survey';
 }
+
+
+
 
 
 
@@ -143,6 +156,8 @@ function displayChart() {
     };
     const myChart = new Chart(myChartBar, config);
 }
+
+
 
 productButton.addEventListener('click', handleClick);
 resultsButton.addEventListener('click', handleResults);
