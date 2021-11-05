@@ -15,6 +15,9 @@ let resultsButton = document.querySelector('.result');
 let skipButton = document.querySelector('.skip');
 let myChartBar = document.getElementById('myChartBar').getContext('2d');
 let myChartContainer = document.getElementById('myChartContainer');
+let buttonContainer = document.querySelector('main div:last-of-type');
+let resetButton = document.querySelector('#reset-button');
+let refreshButton = document.querySelector('#refresh-button');
 let clickCount = 25;
 
 function Products(name, filename = 'jpg') {
@@ -121,14 +124,25 @@ function handleResults(event) {
         productsName.push(product.name);
         product.storeProducts(product.votes, product.views);
     }
-    myChartContainer.className = 'containerAfter';
+
     countLikes();
     displayChart();
     resultsButton.className = 'end-of-survey';
     surveyBanner.className = 'end-of-survey';
+    buttonContainer.className = 'buttonContainerAfter';
+}
+
+function clearData() {
+    localStorage.clear();
+    location.reload();
+}
+
+function refresh() {
+    location.reload();
 }
 
 function displayChart() {
+    myChartContainer.className = 'containerAfter';
     const data = {
         labels: productsName,
         datasets: [{
@@ -160,6 +174,8 @@ function displayChart() {
     const myChart = new Chart(myChartBar, config);
 }
 
+refreshButton.addEventListener('click', refresh);
+resetButton.addEventListener('click', clearData);
 productButton.addEventListener('click', handleClick);
 resultsButton.addEventListener('click', handleResults);
 skipButton.addEventListener('click', handleClick);
