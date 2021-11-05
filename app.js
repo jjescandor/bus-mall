@@ -98,7 +98,7 @@ function handleClick(event) {
         }
     }
 }
-console.log(productsArray);
+
 function countLikes() {
     for (let i = 0; i < productsArray.length; i++) {
         let numLikes = 0
@@ -107,7 +107,6 @@ function countLikes() {
         }
         chartLikesArray.push(numLikes);
     }
-    console.log(chartLikesArray);
 }
 
 function handleResults(event) {
@@ -126,11 +125,6 @@ function handleResults(event) {
     resultsButton.className = 'end-of-survey';
     surveyBanner.className = 'end-of-survey';
 }
-
-
-
-
-
 
 function displayChart() {
     const data = {
