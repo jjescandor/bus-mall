@@ -3,8 +3,7 @@
 let productsArray = [];
 let productsName = [];
 let randomNumArray = [];
-let oldNumArray = [];
-let likabilityArray = [];
+let chartLikesArray = [];
 let imagesArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu',
     'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 let productImages = document.querySelectorAll('img');
@@ -13,7 +12,8 @@ let resultsUl = document.querySelector('.final-ul');
 let surveyBanner = document.querySelector('body h2');
 let resultsButton = document.querySelector('.result');
 let skipButton = document.querySelector('.skip');
-let myChart = document.getElementById('myChart').getContext('2d');
+let myChartBar = document.getElementById('myChartBar').getContext('2d');
+let myChartContainer = document.getElementById('myChartContainer');
 let clickCount = 25;
 
 function Products(name, filename = 'jpg') {
@@ -21,6 +21,7 @@ function Products(name, filename = 'jpg') {
     this.src = `img/${name}.${filename}`;
     this.views = 0;
     this.votes = 0;
+    this.likesArray = JSON.parse(localStorage.getItem("unicorn")) || [];
     productsArray.push(this);
 }
 
@@ -31,6 +32,11 @@ function instantiateObjects() {
     }
 }
 
+Products.prototype.storeProductsLikes = function (likes) {
+    this.likesArray.push(likes);
+    localStorage.setItem(this.name, JSON.stringify(this.likesArray));
+};
+
 instantiateObjects();
 
 function getRandomNum() {
@@ -38,26 +44,21 @@ function getRandomNum() {
 }
 
 function renderProducts() {
-    let num1 = getRandomNum();
-    let num2 = getRandomNum();
-    let num3 = getRandomNum();
-    while ((num1 === num2 || num1 === num3 || num2 === num3) || oldNumArray.includes(num1) || oldNumArray.includes(num2) || oldNumArray.includes(num3)) {
-        num1 = getRandomNum();
-        num2 = getRandomNum();
-        num3 = getRandomNum();
+    while (randomNumArray.length < 6) {
+        let num = getRandomNum();
+        if (!randomNumArray.includes(num)) {
+            randomNumArray.push(num);
+        }
     }
-    console.log('old' + oldNumArray);
-    randomNumArray.push(num1, num2, num3);
-    console.log('new' + randomNumArray);
-    productImages[0].src = productsArray[num1].src;
-    productImages[1].src = productsArray[num2].src;
-    productImages[2].src = productsArray[num3].src;
-    productImages[0].alt = productsArray[num1].name;
-    productImages[1].alt = productsArray[num2].name;
-    productImages[2].alt = productsArray[num3].name;
-    productsArray[num1].views++;
-    productsArray[num2].views++
-    productsArray[num3].views++;
+    productImages[0].src = productsArray[randomNumArray[0]].src;
+    productImages[1].src = productsArray[randomNumArray[1]].src;
+    productImages[2].src = productsArray[randomNumArray[2]].src;
+    productImages[0].alt = productsArray[randomNumArray[0]].name;
+    productImages[1].alt = productsArray[randomNumArray[1]].name;
+    productImages[2].alt = productsArray[randomNumArray[2]].name;
+    productsArray[randomNumArray[0]].views++;
+    productsArray[randomNumArray[1]].views++
+    productsArray[randomNumArray[3]].views++;
     if (!clickCount) {
         productButton.removeEventListener('click', handleClick);
         productImages[0].remove();
@@ -78,15 +79,9 @@ function handleClick(event) {
     } else {
         clickCount--;
         if (clickCount < 25) {
-            let oldNum1 = randomNumArray.shift();
-            let oldNum2 = randomNumArray.shift();
-            let oldNum3 = randomNumArray.shift();
-            oldNumArray.push(oldNum1, oldNum2, oldNum3);
-            if (clickCount < 24) {
-                oldNumArray.shift();
-                oldNumArray.shift();
-                oldNumArray.shift();
-            }
+            randomNumArray.shift();
+            randomNumArray.shift();
+            randomNumArray.shift();
         }
         renderProducts();
         surveyBanner.textContent = `Remaining Votes: ${clickCount}`
@@ -109,40 +104,46 @@ function handleResults(event) {
     resultsUl.prepend(resultsh2);
     for (let product of productsArray) {
         productsName.push(product.name);
-        likabilityArray.push((product.votes / product.views) * 100)
-        let resultsLi = document.createElement('li');
-        resultsLi.textContent = `${product.name} had ${product.votes} votes, and was seen ${product.views} times.`
-        resultsUl.appendChild(resultsLi);
+        product.storeProductsLikes(product.votes);
+        let numLikes = 0
+        for (let j = 0; j < product.likesArray.length; j++) {
+            numLikes += product.likesArray[j];
+            chartLikesArray.push(numLikes);
+        }
     }
+    myChartContainer.className = 'containerAfter';
     displayChart();
     resultsButton.className = 'end-of-survey';
     surveyBanner.className = 'end-of-survey';
 }
 
+
+
 function displayChart() {
-    let massPopChart = new Chart(myChart, {
+    const data = {
+        labels: productsName,
+        datasets: [{
+            label: 'Likes',
+            data: chartLikesArray,
+            backgroundColor: ['rgba(160, 30, 100, 0.4)'],
+            borderColor: ['grey'],
+            borderWidth: 1
+        }]
+    };
+    const config = {
         type: 'bar',
-        data: {
-            labels: productsName,
-            datasets: [{
-                label: '',
-                data: likabilityArray,
-                backgroundColor: [
-                    'red',
-                    'orange',
-                    'yellow',
-                    'green',
-                    'blue',
-                    'indigo',
-                    'violet'
-                ]
-            }],
-            options: {}
-        }
-    });
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    };
+    const myChart = new Chart(myChartBar, config);
 }
 
 productButton.addEventListener('click', handleClick);
 resultsButton.addEventListener('click', handleResults);
 skipButton.addEventListener('click', handleClick);
-

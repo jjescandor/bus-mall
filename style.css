@@ -20,8 +20,6 @@ body{
 }
 
 h1{
-    border-width:4px;
-    border: dashed blue;
     color: #475561;
     padding:1rem 1rem 0 1rem;
     margin:5px 5px 0 5px;
@@ -70,7 +68,7 @@ main{
     align-items: center;
     width: 70%;
     margin: 0rem 30rem;
-    height:700px;
+    height:auto;
     background-size: cover;
 }
 
@@ -264,4 +262,19 @@ i{
 
 i:hover{
     color:#475561;
+}
+
+.containerBefore{
+    display:none;
+}
+
+.containerAfter{
+    display:flex;
+    flex-direction: column;
+    width:1000px;
+    height:auto;
+}
+
+canvas{
+    margin-top:50px;
 }
