@@ -1,15 +1,19 @@
 "use strict";
 
-
-
 let productsArray = [];
+let productsName = [];
+let randomNumArray = [];
+let chartLikesArray = [];
+let imagesArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu',
+    'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 let productImages = document.querySelectorAll('img');
 let productButton = document.querySelector('main section');
 let resultsUl = document.querySelector('.final-ul');
 let surveyBanner = document.querySelector('body h2');
-
 let resultsButton = document.querySelector('.result');
 let skipButton = document.querySelector('.skip');
+let myChartBar = document.getElementById('myChartBar').getContext('2d');
+let myChartContainer = document.getElementById('myChartContainer');
 let clickCount = 25;
 
 function Products(name, filename = 'jpg') {
@@ -17,52 +21,45 @@ function Products(name, filename = 'jpg') {
     this.src = `img/${name}.${filename}`;
     this.views = 0;
     this.votes = 0;
+    this.likesArray = JSON.parse(localStorage.getItem("unicorn")) || [];
     productsArray.push(this);
 }
 
-new Products('bag');
-new Products('banana');
-new Products('bathroom');
-new Products('boots');
-new Products('breakfast');
-new Products('bubblegum');
-new Products('chair');
-new Products('cthulhu');
-new Products('dog-duck');
-new Products('dragon');
-new Products('pen');
-new Products('pet-sweep');
-new Products('scissors');
-new Products('shark');
-new Products('sweep', 'png');
-new Products('tauntaun');
-new Products('unicorn');
-new Products('water-can');
-new Products('wine-glass');
+function instantiateObjects() {
+    new Products('sweep', 'png')
+    for (let image of imagesArray) {
+        new Products(image);
+    }
+}
+
+Products.prototype.storeProductsLikes = function (likes) {
+    this.likesArray.push(likes);
+    localStorage.setItem(this.name, JSON.stringify(this.likesArray));
+};
+
+instantiateObjects();
 
 function getRandomNum() {
-    return Math.floor(Math.random() * 19);
+    return Math.floor(Math.random() * productsArray.length);
 }
 
 function renderProducts() {
-    let num1 = getRandomNum();
-    let num2 = getRandomNum();
-    let num3 = getRandomNum();
-    while (num1 === num2 || num1 === num3 || num2 === num3) {
-        num2 = getRandomNum();
-        num3 = getRandomNum();
+    while (randomNumArray.length < 6) {
+        let num = getRandomNum();
+        if (!randomNumArray.includes(num)) {
+            randomNumArray.push(num);
+        }
     }
-    productImages[0].src = productsArray[num1].src;
-    productImages[1].src = productsArray[num2].src;
-    productImages[2].src = productsArray[num3].src;
-    productImages[0].alt = productsArray[num1].name;
-    productImages[1].alt = productsArray[num2].name;
-    productImages[2].alt = productsArray[num3].name;
-    productsArray[num1].views++;
-    productsArray[num2].views++
-    productsArray[num3].views++;
-    if (clickCount === 0) {
-        console.log('end');
+    productImages[0].src = productsArray[randomNumArray[0]].src;
+    productImages[1].src = productsArray[randomNumArray[1]].src;
+    productImages[2].src = productsArray[randomNumArray[2]].src;
+    productImages[0].alt = productsArray[randomNumArray[0]].name;
+    productImages[1].alt = productsArray[randomNumArray[1]].name;
+    productImages[2].alt = productsArray[randomNumArray[2]].name;
+    productsArray[randomNumArray[0]].views++;
+    productsArray[randomNumArray[1]].views++
+    productsArray[randomNumArray[3]].views++;
+    if (!clickCount) {
         productButton.removeEventListener('click', handleClick);
         productImages[0].remove();
         productImages[1].remove();
@@ -73,7 +70,7 @@ function renderProducts() {
     }
 }
 
-renderProducts()
+renderProducts();
 
 function handleClick(event) {
     event.preventDefault();
@@ -81,16 +78,20 @@ function handleClick(event) {
         alert("Please select a product");
     } else {
         clickCount--;
-        console.log(clickCount);
+        if (clickCount < 25) {
+            randomNumArray.shift();
+            randomNumArray.shift();
+            randomNumArray.shift();
+        }
         renderProducts();
         surveyBanner.textContent = `Remaining Votes: ${clickCount}`
-        if (clickCount === 0) {
+        if (!clickCount) {
             skipButton.className = 'end-of-survey';
             surveyBanner.textContent = 'End of survey, click the button below to view results'
         }
-        for (let i = 0; i < productsArray.length; i++) {
-            if (event.target.alt === productsArray[i].name) {
-                productsArray[i].votes++;
+        for (let product of productsArray) {
+            if (event.target.alt === product.name) {
+                product.votes++;
             }
         }
     }
@@ -101,18 +102,48 @@ function handleResults(event) {
     let resultsh2 = document.createElement('h2');
     resultsh2.textContent = "Survey Results";
     resultsUl.prepend(resultsh2);
-    for (let i = 0; i < productsArray.length; i++) {
-        let resultsLi = document.createElement('li');
-        resultsLi.textContent = `${productsArray[i].name} had ${productsArray[i].votes} votes, and was seen ${productsArray[i].views} times.`
-        resultsUl.appendChild(resultsLi);
+    for (let product of productsArray) {
+        productsName.push(product.name);
+        product.storeProductsLikes(product.votes);
+        let numLikes = 0
+        for (let j = 0; j < product.likesArray.length; j++) {
+            numLikes += product.likesArray[j];
+            chartLikesArray.push(numLikes);
+        }
     }
+    myChartContainer.className = 'containerAfter';
+    displayChart();
     resultsButton.className = 'end-of-survey';
     surveyBanner.className = 'end-of-survey';
+}
+
+
+
+function displayChart() {
+    const data = {
+        labels: productsName,
+        datasets: [{
+            label: 'Likes',
+            data: chartLikesArray,
+            backgroundColor: ['rgba(160, 30, 100, 0.4)'],
+            borderColor: ['grey'],
+            borderWidth: 1
+        }]
+    };
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    };
+    const myChart = new Chart(myChartBar, config);
 }
 
 productButton.addEventListener('click', handleClick);
 resultsButton.addEventListener('click', handleResults);
 skipButton.addEventListener('click', handleClick);
-
-
-
