@@ -110,7 +110,6 @@ function countLikes() {
         chartVotesArray.push(numVotes);
         chartViewsArray.push(numViews);
     }
-    console.log(chartVotesArray);
 }
 
 function handleResults(event) {
@@ -160,8 +159,6 @@ function displayChart() {
     };
     const myChart = new Chart(myChartBar, config);
 }
-
-
 
 productButton.addEventListener('click', handleClick);
 resultsButton.addEventListener('click', handleResults);
