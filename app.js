@@ -33,13 +33,13 @@ function instantiateObjects() {
     }
 }
 
+instantiateObjects();
+
 Products.prototype.storeProducts = function (votes, views) {
     this.likesObj.votes.push(votes);
     this.likesObj.views.push(views);
     localStorage.setItem(this.name, JSON.stringify(this.likesObj));
 };
-
-instantiateObjects();
 
 function getRandomNum() {
     return Math.floor(Math.random() * productsArray.length);
@@ -86,10 +86,10 @@ function handleClick(event) {
             randomNumArray.shift();
         }
         renderProducts();
-        surveyBanner.textContent = `Remaining Votes: ${clickCount}`
+        surveyBanner.textContent = `Remaining Votes: ${clickCount}`;
         if (!clickCount) {
             skipButton.className = 'end-of-survey';
-            surveyBanner.textContent = 'End of survey, click the button below to view results'
+            surveyBanner.textContent = 'End of survey, click the button below to view results';
         }
         for (let product of productsArray) {
             if (event.target.alt === product.name) {
@@ -134,14 +134,14 @@ function displayChart() {
         datasets: [{
             label: 'Likes',
             data: chartVotesArray,
-            backgroundColor: ['rgba(176, 18, 160, 0.4)'],
+            backgroundColor: ['rgba(54,163,235,0.2)'],
             borderColor: ['grey'],
             borderWidth: 0.5
         },
         {
             label: 'Views',
             data: chartViewsArray,
-            backgroundColor: ['rgba(49, 199, 74, 0.4)'],
+            backgroundColor: ['rgba(255,99,131,0.2)'],
             borderColor: ['grey'],
             borderWidth: 0.5
         }]

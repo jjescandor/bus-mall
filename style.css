@@ -183,6 +183,8 @@ h2{
 
 ul{
     color: rgb(51, 51, 51);
+    margin:none;
+    padding:none;
 }
 
 .end-of-survey{
@@ -271,10 +273,20 @@ i:hover{
 .containerAfter{
     display:flex;
     flex-direction: column;
-    width:1000px;
-    height:auto;
+    width:100%;
+    height: 100%;
+    margin: none;
+    padding:none;
 }
 
 canvas{
     margin-top:50px;
+    margin: none;
+    padding:none;
+}
+
+.shrink{
+    display: flex;
+    margin: none;
+    padding:none;
 }
