@@ -3,7 +3,8 @@
 let productsArray = [];
 let productsName = [];
 let randomNumArray = [];
-let chartLikesArray = [];
+let chartVotesArray = [];
+let chartViewsArray = [];
 let imagesArray = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu',
     'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 let productImages = document.querySelectorAll('img');
@@ -21,7 +22,7 @@ function Products(name, filename = 'jpg') {
     this.src = `img/${name}.${filename}`;
     this.views = 0;
     this.votes = 0;
-    this.likesArray = JSON.parse(localStorage.getItem("unicorn")) || [];
+    this.likesObj = JSON.parse(localStorage.getItem(this.name)) || { votes: [], views: [] };
     productsArray.push(this);
 }
 
@@ -32,9 +33,10 @@ function instantiateObjects() {
     }
 }
 
-Products.prototype.storeProducts = function (likes) {
-    this.likesArray.push(likes);
-    localStorage.setItem(this.name, JSON.stringify(this.likesArray));
+Products.prototype.storeProducts = function (votes, views) {
+    this.likesObj.votes.push(votes);
+    this.likesObj.views.push(views);
+    localStorage.setItem(this.name, JSON.stringify(this.likesObj));
 };
 
 instantiateObjects();
@@ -44,8 +46,6 @@ function getRandomNum() {
 }
 
 function renderProducts() {
-
-
     while (randomNumArray.length < 6) {
         let num = getRandomNum();
         if (!randomNumArray.includes(num)) {
@@ -101,11 +101,14 @@ function handleClick(event) {
 
 function countLikes() {
     for (let i = 0; i < productsArray.length; i++) {
-        let numLikes = 0
-        for (let j = 0; j < productsArray[0].likesArray.length; j++) {
-            numLikes += productsArray[i].likesArray[j];
+        let numVotes = 0;
+        let numViews = 0;
+        for (let j = 0; j < productsArray[0].likesObj.votes.length; j++) {
+            numVotes += productsArray[i].likesObj.votes[j];
+            numViews += productsArray[i].likesObj.views[j];
         }
-        chartLikesArray.push(numLikes);
+        chartVotesArray.push(numVotes);
+        chartViewsArray.push(numViews);
     }
 }
 
@@ -116,8 +119,7 @@ function handleResults(event) {
     resultsUl.prepend(resultsh2);
     for (let product of productsArray) {
         productsName.push(product.name);
-        product.storeProducts(product.votes);
-
+        product.storeProducts(product.votes, product.views);
     }
     myChartContainer.className = 'containerAfter';
     countLikes();
@@ -131,10 +133,17 @@ function displayChart() {
         labels: productsName,
         datasets: [{
             label: 'Likes',
-            data: chartLikesArray,
-            backgroundColor: ['rgba(160, 30, 100, 0.4)'],
+            data: chartVotesArray,
+            backgroundColor: ['rgba(176, 18, 160, 0.4)'],
             borderColor: ['grey'],
-            borderWidth: 1
+            borderWidth: 0.5
+        },
+        {
+            label: 'Views',
+            data: chartViewsArray,
+            backgroundColor: ['rgba(49, 199, 74, 0.4)'],
+            borderColor: ['grey'],
+            borderWidth: 0.5
         }]
     };
     const config = {
@@ -150,8 +159,6 @@ function displayChart() {
     };
     const myChart = new Chart(myChartBar, config);
 }
-
-
 
 productButton.addEventListener('click', handleClick);
 resultsButton.addEventListener('click', handleResults);
