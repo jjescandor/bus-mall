@@ -149,7 +149,7 @@ function displayChart() {
         datasets: [{
             label: 'Likes',
             data: chartVotesArray,
-            backgroundColor: ['rgba(54,163,235,0.8)'],
+            backgroundColor: ['rgb(247,206,114,0.8)'],
             borderColor: ['white'],
             borderWidth: 1,
             color: ['white']
@@ -157,7 +157,7 @@ function displayChart() {
         {
             label: 'Views',
             data: chartViewsArray,
-            backgroundColor: ['rgba(255,99,131,0.8)'],
+            backgroundColor: ['rgba(54,163,235,0.8)'],
             borderColor: ['white'],
             borderWidth: 1,
             color: ['white']
