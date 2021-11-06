@@ -38,7 +38,7 @@ function instantiateObjects() {
 
 instantiateObjects();
 
-Products.prototype.storeProducts = function (votes, views) {
+Products.prototype.storeProductsData = function (votes, views) {
     this.likesObj.votes.push(votes);
     this.likesObj.views.push(views);
     localStorage.setItem(this.name, JSON.stringify(this.likesObj));
@@ -122,7 +122,7 @@ function handleResults(event) {
     resultsUl.prepend(resultsh2);
     for (let product of productsArray) {
         productsName.push(product.name);
-        product.storeProducts(product.votes, product.views);
+        product.storeProductsData(product.votes, product.views);
     }
 
     countLikes();
@@ -145,31 +145,48 @@ function displayChart() {
     myChartContainer.className = 'containerAfter';
     const data = {
         labels: productsName,
+        fontColor: ['white'],
         datasets: [{
             label: 'Likes',
             data: chartVotesArray,
-            backgroundColor: ['rgba(54,163,235,0.2)'],
-            borderColor: ['grey'],
-            borderWidth: 0.5
+            backgroundColor: ['rgba(54,163,235,0.8)'],
+            borderColor: ['white'],
+            borderWidth: 1,
+            color: ['white']
         },
         {
             label: 'Views',
             data: chartViewsArray,
-            backgroundColor: ['rgba(255,99,131,0.2)'],
-            borderColor: ['grey'],
-            borderWidth: 0.5
+            backgroundColor: ['rgba(255,99,131,0.8)'],
+            borderColor: ['white'],
+            borderWidth: 1,
+            color: ['white']
         }]
     };
     const config = {
         type: 'bar',
         data: data,
+        fontColor: ['white'],
         options: {
             scales: {
-                y: {
-                    beginAtZero: true
-                }
+                y: [{
+                    ticks: {
+                        fontColor: "green",
+                        fontSize: 18,
+                        stepSize: 1,
+                        beginAtZero: true
+                    }
+                }],
+                x: [{
+                    ticks: {
+                        fontColor: "purple",
+                        fontSize: 14,
+                        stepSize: 1,
+                        beginAtZero: true
+                    }
+                }]
             }
-        },
+        }
     };
     const myChart = new Chart(myChartBar, config);
 }

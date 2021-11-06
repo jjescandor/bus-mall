@@ -278,9 +278,15 @@ i:hover{
 }
 
 canvas{
+    border-radius: 4px;
+    font-size: 2rem;
     margin-top:50px;
     margin: none;
-    padding:none;
+    padding:1rem;
+    background-color:darkgrey;
+    color:white;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
 }
 
 .shrink{
