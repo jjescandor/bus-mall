@@ -115,13 +115,17 @@ function countLikes() {
     }
 }
 
-function handleResults(event) {
-    event.preventDefault();
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function handleResults(e) {
+    e.preventDefault();
     let resultsh2 = document.createElement('h2');
     resultsh2.textContent = "Survey Results";
     resultsUl.prepend(resultsh2);
     for (let product of productsArray) {
-        productsName.push(product.name);
+        productsName.push(capitalize(product.name));
         product.storeProductsData();
     }
     countLikes();
