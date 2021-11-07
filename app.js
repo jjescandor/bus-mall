@@ -38,9 +38,9 @@ function instantiateObjects() {
 
 instantiateObjects();
 
-Products.prototype.storeProductsData = function (votes, views) {
-    this.likesObj.votes.push(votes);
-    this.likesObj.views.push(views);
+Products.prototype.storeProductsData = function () {
+    this.likesObj.votes.push(this.votes);
+    this.likesObj.views.push(this.views);
     localStorage.setItem(this.name, JSON.stringify(this.likesObj));
 };
 
@@ -122,9 +122,8 @@ function handleResults(event) {
     resultsUl.prepend(resultsh2);
     for (let product of productsArray) {
         productsName.push(product.name);
-        product.storeProductsData(product.votes, product.views);
+        product.storeProductsData();
     }
-
     countLikes();
     displayChart();
     resultsButton.className = 'end-of-survey';
@@ -166,27 +165,13 @@ function displayChart() {
     const config = {
         type: 'bar',
         data: data,
-        fontColor: ['white'],
         options: {
             scales: {
-                y: [{
-                    ticks: {
-                        fontColor: "green",
-                        fontSize: 18,
-                        stepSize: 1,
-                        beginAtZero: true
-                    }
-                }],
-                x: [{
-                    ticks: {
-                        fontColor: "purple",
-                        fontSize: 14,
-                        stepSize: 1,
-                        beginAtZero: true
-                    }
-                }]
+                y: {
+                    beginAtZero: true
+                }
             }
-        }
+        },
     };
     const myChart = new Chart(myChartBar, config);
 }
